@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <jsp:directive.page contentType="text/html;charset=windows-1252"/>
+  <f:view>
+    <af:document id="d1">
+      <af:form id="f1" inlineStyle="border-color:transparent;">
+        <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                         id="pt1">
+          <f:facet name="pageContents">
+            <af:panelGroupLayout id="pgl1" layout="scroll"
+                                 inlineStyle="border-color:transparent; height:500.0px;">
+              <af:panelGridLayout id="pgl2">
+                <af:gridRow marginTop="5px" height="40px" id="gr1">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc2">
+                    <af:outputLabel value="Job Mobility Registration Report" id="ol1"
+                                    inlineStyle="font-weight:bolder; font-size:large;"/>
+                  </af:gridCell>
+                  <af:gridCell width="50%" marginEnd="5px" id="gc1"
+                               marginStart="50px" halign="end"
+                               valign="stretch"/>
+                </af:gridRow>
+              </af:panelGridLayout>
+              <af:panelGroupLayout id="pgl3" layout="vertical" halign="center">
+                <af:panelGroupLayout id="pgl4"
+                                     binding="#{pageFlowScope.pageFlow_fragment_reports.dynamicParamsPGL}">
+                  <af:panelFormLayout id="pfl1"
+                                      inlineStyle="margin-bottom:10px;">
+                    <af:selectOneChoice value="#{bindings.Report.inputValue}"
+                                        label="Report" required="true"
+                                        shortDesc="#{bindings.Report.hints.tooltip}"
+                                        binding="#{pageFlowScope.pageFlow_fragment_reports.reportLOVBinding}"
+                                        id="soc1" contentStyle="width:220px;"
+                                        autoSubmit="true"
+                                        inlineStyle="margin-bottom:10px;"
+                                        valueChangeListener="#{pageFlowScope.pageFlow_fragment_reports.reportsValueChangeListener}"
+                                        rendered="false"
+                                        visible="true">
+                      <f:selectItems value="#{bindings.Report.items}" id="si1"/>
+                    </af:selectOneChoice>
+                    <af:iterator value="#{pageFlowScope.pageFlow_fragment_reports.params}"
+                                 var="val" id="i1">
+                      <af:switcher id="switch1"
+                                   facetName="#{pageFlowScope.pageFlow_fragment_reports.paramsType[val]}">
+                        <f:facet name="LOV">
+                          <af:selectOneChoice label="#{pageFlowScope.pageFlow_fragment_reports.paramsDisplay[val]}"
+                                              valueChangeListener="#{pageFlowScope.pageFlow_fragment_reports.paramValueChangeListener}"
+                                              id="soc2" autoSubmit="true"
+                                              required="#{pageFlowScope.pageFlow_fragment_reports.paramsMandatory[val] eq 'Y' ? true : false}"
+                                              contentStyle="width:220px;"
+                                              inlineStyle="margin-bottom:10px;"
+                                              unselectedLabel=""
+                                              value="#{pageFlowScope.pageFlow_fragment_reports.paramsSelectedValue[val]}">
+                            <f:selectItems value="#{pageFlowScope.pageFlow_fragment_reports.paramsMap[val]}"
+                                           id="si2"/>
+                            <f:attribute name="paramName" value="#{val}"/>
+                          </af:selectOneChoice>
+                        </f:facet>
+                        <f:facet name="CHAR">
+                          <af:inputText label="#{pageFlowScope.pageFlow_fragment_reports.paramsDisplay[val]}"
+                                        autoSubmit="true"
+                                        required="#{pageFlowScope.pageFlow_fragment_reports.paramsMandatory[val] eq 'Y' ? true : false}"
+                                        value="#{pageFlowScope.pageFlow_fragment_reports.paramsSelectedValue[val]}"
+                                        contentStyle="width:220px;"
+                                        inlineStyle="margin-bottom:10px;"
+                                        id="it1" disabled="true"/>
+                        </f:facet>
+                        <f:facet name="NUMBER">
+                          <af:inputText label="#{pageFlowScope.pageFlow_fragment_reports.paramsDisplay[val]}"
+                                        autoSubmit="true"
+                                        required="#{pageFlowScope.pageFlow_fragment_reports.paramsMandatory[val] eq 'Y' ? true : false}"
+                                        value="#{pageFlowScope.pageFlow_fragment_reports.paramsSelectedValue[val]}"
+                                        contentStyle="width:220px;text-align:right;"
+                                        inlineStyle="margin-bottom:10px;"
+                                        id="it2">
+                            <af:validateRegExp pattern="[0-9]{1,10}"
+                                               messageDetailNoMatch="Enter Only Numbers"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="DATE">
+                          <af:inputDate label="#{pageFlowScope.pageFlow_fragment_reports.paramsDisplay[val]}"
+                                        autoSubmit="true"
+                                        required="#{pageFlowScope.pageFlow_fragment_reports.paramsMandatory[val] eq 'Y' ? true : false}"
+                                        value="#{pageFlowScope.pageFlow_fragment_reports.paramsSelectedValue[val]}"
+                                        contentStyle="width:220px;"
+                                        inlineStyle="margin-bottom:10px;"
+                                        id="id1">
+                            <!--<af:convertDateTime pattern="#{sessionScope.applicationSetup.REPORT_DATE_FORMAT}"/>-->
+                            <af:convertDateTime pattern="dd-MMM-yyyy"/>
+                          </af:inputDate>
+                        </f:facet>
+                      </af:switcher>
+                    </af:iterator>
+                    <af:selectOneChoice value="xlsx" label="Reports Format"
+                                        contentStyle="width:220px;"
+                                        inlineStyle="margin-bottom:10px;"
+                                        required="true"
+                                        shortDesc="#{bindings.ReportsFormat.hints.tooltip}"
+                                        id="soc3" autoSubmit="true"
+                                        disabled="true" rendered="true"
+                                        visible="false">
+                      <f:selectItems value="#{bindings.ReportsFormat.items}"
+                                     id="si3"/>
+                    </af:selectOneChoice>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl5" layout="vertical">
+                <af:commandButton text="Go" id="cb1"
+                                  actionListener="#{pageFlowScope.pageFlow_fragment_reports.getReport}"
+                                  partialSubmit="true"/>
+                  <af:spacer width="10" height="10" id="s1"/>
+                  <af:panelGroupLayout id="pgl6" layout="horizontal">
+                    <af:spacer width="300" height="10" id="s3"/>
+                    <af:goButton text="Download All" 
+                   destination="https://oaosoaprd.oandoplc.com/Oando/webresources/JMR/Form?p_emp_num=All&amp;p_from_date=&amp;p_to_date=&amp;P_File_Type=xlsx"
+                                 targetFrame="_blank" id="gb1"
+                                 />
+                    <af:spacer width="10" height="10" id="s2"/>
+                    <af:outputText value="Download Report in Single sheet for All employee's" id="ot1"
+                                   inlineStyle="color:Red;"/>
+                  </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

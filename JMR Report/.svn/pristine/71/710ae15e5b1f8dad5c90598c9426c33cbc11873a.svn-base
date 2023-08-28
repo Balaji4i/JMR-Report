@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.Reports_BTF
+-->
+<menu>
+    <groupNode id="AdminModule" idref="AdminModuleId" label="">
+        <!--Roles-->
+        <itemNode id="Reports" label="Reports" icon="/images/grid_matte_contacts.png"
+                  cardIcon="/images/grid_matte_contacts.png" taskMenuSource="/taskFlow/Reports_BTF.xml"
+                  securedResourceName="/taskFlow/Reports_BTF.xml" focusViewId="/AdminApp"
+                  webApp="AdminApp" applicationStripe="AdminApp" showOnHomeGrid="true" rendered="true"/>
+    </groupNode>
+</menu>
